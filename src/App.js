@@ -1,6 +1,6 @@
 
 
-
+import Container from './components/Conteiner/Container';
 import s from './App.module.css';
 import ContactList from './components/ContactList';
 import Filter from './components/Filter';
@@ -53,11 +53,13 @@ export default function App() {
 
   return (
     <>
-      <h1 className={s}>Phonebook</h1>
+       <Container>
+      <h1 className={s.label}>Phonebook</h1>
       <ContactForm />
-      <h2 className={s}>Contacts</h2>
+      <h2 className={s.label}>Contacts</h2>
       <Filter />
-      <ContactList/>
+        <ContactList />
+      </Container>
     </>
   );
 }
