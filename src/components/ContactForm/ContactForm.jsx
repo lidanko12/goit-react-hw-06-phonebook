@@ -1,12 +1,18 @@
 
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import s from './ContactForm.module.css';
 import actions from '../../redux/phonebook/phonebook-actions'
+import { toast, ToastContainer, Zoom } from 'react-toastify';
+import { getContacts } from "../../redux/phonebook/selector";
+import 'react-toastify/dist/ReactToastify.css';
+
+
 export default function ContactForm() {
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
     const dispatch = useDispatch()
+    const contacts= useSelector(getContacts)
     const handleChange = event => {
         const { name, value } = event.target;
         switch (name) {
@@ -22,6 +28,14 @@ export default function ContactForm() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
+        const duplicateContact = contacts.find(
+    (contact) => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    if (duplicateContact) {
+    toast.warning('Contact is already added !!!');
+    return;
+    }
+        
         dispatch(actions.addContact(name, number));
         setName('');
         setNumber('');
@@ -29,6 +43,7 @@ export default function ContactForm() {
     };
 
     return (
+        <>
         <form className={s.form} onSubmit={handleSubmit}>
             <label>
                 Name
@@ -56,6 +71,8 @@ export default function ContactForm() {
             </label>
             <button type="submit" className={s.btn}>Add contact</button>
         </form>
+            <ToastContainer transition={Zoom} autoClose={3000} />
+            </>
     )
 }
 // class ContactForm extends Component {

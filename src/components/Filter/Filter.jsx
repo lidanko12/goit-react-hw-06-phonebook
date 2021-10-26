@@ -1,10 +1,9 @@
 import s from "./Filter.module.css";
-import { getFilter,getContacts } from "../../redux/phonebook/selector";
+import { getFilter} from "../../redux/phonebook/selector";
 import { useDispatch,useSelector } from "react-redux";
 import actions from '../../redux/phonebook/phonebook-actions'
 export default function Filter() {
   const filter = useSelector(getFilter);
-  const contacts= useSelector(getContacts)
   const dispatch = useDispatch();
 
   return (
